@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { ChakraProvider,Flex } from '@chakra-ui/react'
+import Card2 from "./components/Card2";
 
-function App() {
+export default function App() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get(
+        "https://deploy-exercicios.onrender.com/students"
+      );
+console.log(response)
+      setUsers(response.data);
+    } catch (error) {
+      console.log("Erro ao buscar usuários");
+      console.log(error);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ChakraProvider resetCSS>
+      <h1>PRINCIPAIS CURSOS</h1>
+      <Flex gap={"16px"} wrap={"wrap"}>
+     {users && users.map((user) =>{
+      return <Card2 user={user} key={user.id}/>
+     }
+     )}
+         </Flex>
+    </ChakraProvider>
   );
 }
-
-export default App;
