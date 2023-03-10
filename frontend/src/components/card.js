@@ -1,11 +1,20 @@
-import axios from "axios";
+import { CardContainer } from "./card.styled"
 
 
-export default function PlaylistCard() {
+
+function Card(props){
+
+
+  const {mensagem, id} = props
+
+
   
-  return (
-    <article>
-  
-    </article>
-  );
+  return(
+    <CardContainer>
+      <p className="nome">Nome:{id}</p>
+      <p className="texto">{mensagem}</p>
+    </CardContainer>
+  )
 }
+
+export default Card
